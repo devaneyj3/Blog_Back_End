@@ -1,12 +1,41 @@
 const request = require("supertest");
 
 const server = require("../app.js");
+const model = require("../api/model");
 
 describe("blog_post.js", () => {
-    describe("GET /", () => {
-        it("should return a 404 status code for no data", async () => {
-            const response = await request(server).get("/api/post/");
-            expect(response.status).toEqual(404);
+    const data = {
+        id: 1,
+        title: "Hello",
+        body: "test",
+        created_at: "2017",
+    };
+    describe("POST /api/post", () => {
+        it("should return a 201 created", async () => {
+            const response = await request(server).post("/api/post").send(data);
+            expect(response.status).toEqual(201);
+            expect(response.type).toEqual("application/json");
         });
+    });
+    describe("GET /api/post", () => {
+        it("should return a 200 with data", async () => {
+            await request(server).post("/api/post").send(data);
+            const response = await request(server).get("/api/post/");
+            expect(response.status).toEqual(200);
+            expect(response.body).toHaveLength(1);
+            expect(response.type).toEqual("application/json");
+        });
+    });
+    describe("GET /api/post/id", () => {
+        it("should return a 200 with data", async () => {
+            await request(server).post("/api/post").send(data);
+            const response = await request(server).get("/api/post/1");
+            expect(response.status).toEqual(200);
+            expect(response.body).toHaveLength(1);
+            expect(response.type).toEqual("application/json");
+        });
+    });
+    beforeEach(async () => {
+        await model.clearDB("blog_post");
     });
 });
