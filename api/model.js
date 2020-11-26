@@ -6,6 +6,9 @@ const getAllFields = (table) => {
 const getFieldById = (table, id) => {
     return db(table).where({ id });
 };
+const deleteData = (table, id) => {
+    return db(table).where({ id }).del();
+};
 const postData = async (table, req) => {
     return await db(table).insert(req.body);
 };
@@ -22,4 +25,5 @@ module.exports = {
     postData,
     getFieldById,
     updateData,
+    deleteData,
 };

@@ -59,4 +59,17 @@ route.put("/:id", async (req, res) => {
         helper.dbError(res);
     }
 });
+route.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+    const post = await model.deleteData("blog_post", id);
+    try {
+        if (post) {
+            res.status(200).send(id);
+        } else {
+            helper.notFound(res);
+        }
+    } catch {
+        helper.dbError(res);
+    }
+});
 module.exports = route;

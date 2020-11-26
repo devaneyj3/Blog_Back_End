@@ -45,6 +45,14 @@ describe("blog_post.js", () => {
             expect(response.type).toEqual("application/json");
         });
     });
+    describe("DELETE /api/post/id", () => {
+        it("should delete an id and send back a 200 status code", async () => {
+            await request(server).post("/api/post").send(data);
+            const response = await request(server).delete("/api/post/1");
+            expect(response.status).toEqual(200);
+            expect(response.type).toEqual("text/html");
+        });
+    });
     beforeEach(async () => {
         await model.clearDB("blog_post");
     });
