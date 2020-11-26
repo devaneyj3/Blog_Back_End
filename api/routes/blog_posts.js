@@ -40,5 +40,23 @@ route.post("/", async (req, res) => {
         helper.dbError(res);
     }
 });
-
+route.put("/:id", async (req, res) => {
+    const { id } = req.params;
+    const { title, body, created_at } = req.body;
+    const obj = {
+        title: title,
+        body: body,
+        created_at: created_at,
+    };
+    const post = await model.updateData("blog_post", obj, id);
+    try {
+        if (post) {
+            res.status(200).send(req.body);
+        } else {
+            helper.notFound(res);
+        }
+    } catch {
+        helper.dbError(res);
+    }
+});
 module.exports = route;

@@ -35,6 +35,16 @@ describe("blog_post.js", () => {
             expect(response.type).toEqual("application/json");
         });
     });
+    describe("PUT /api/post/id", () => {
+        it("should return a 200 OK to update data", async () => {
+            await request(server).post("/api/post").send(data);
+            const response = await request(server)
+                .put("/api/post/1")
+                .send({ title: "Goodbye", body: "test1", created_at: "2018" });
+            expect(response.status).toEqual(200);
+            expect(response.type).toEqual("application/json");
+        });
+    });
     beforeEach(async () => {
         await model.clearDB("blog_post");
     });

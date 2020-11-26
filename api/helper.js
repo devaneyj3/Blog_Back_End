@@ -3,7 +3,7 @@ const notFound = (res) => {
 };
 
 const dbError = (res) => {
-    res.send(500).send("There is a problem with the database");
+    res.status(500).send("There is a problem with the database");
 };
 module.exports = {
     notFound,

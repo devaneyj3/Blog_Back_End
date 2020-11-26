@@ -7,8 +7,11 @@ const getFieldById = (table, id) => {
     return db(table).where({ id });
 };
 const postData = async (table, req) => {
-    console.log(req.body);
     return await db(table).insert(req.body);
+};
+
+const updateData = async (table, obj, id) => {
+    return await db(table).update(obj).where({ id });
 };
 const clearDB = (table) => {
     return db(table).truncate();
@@ -18,4 +21,5 @@ module.exports = {
     clearDB,
     postData,
     getFieldById,
+    updateData,
 };
