@@ -29,7 +29,10 @@ route.get("/:id", async (req, res) => {
     }
 });
 route.post("/", async (req, res) => {
-    const post = await model.postData("blog_post", req);
+    await model.postData("blog_post", req);
+
+    const post = await model.getAllFields("blog_post");
+    console.log(post);
     try {
         if (post) {
             res.status(201).send(post);
